@@ -1,6 +1,6 @@
-#include "../includes/so_long.hpp"
+#include "../includes/Map.hpp"
 
-int	is_valid_file_name(string &file_name)
+int	is_valid_file_name(const string &file_name)
 {
 	int size = (int)file_name.size();
 	
@@ -9,10 +9,10 @@ int	is_valid_file_name(string &file_name)
 	return (VALID);
 }
 
-void	is_valid_file(ifstream &file, string file_name)
+void	Map::isValidFile(ifstream &file, const string &file_name)
 {
 	if (!file.is_open())
-		print_error(INVALID_FILE);
+		this->printError(INVALID_FILE);
 	if (is_valid_file_name(file_name) == FILE_NAME)
-		print_error(FILE_NAME);
+		this->printError(FILE_NAME);
 }

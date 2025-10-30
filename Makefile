@@ -1,6 +1,6 @@
 CXX = c++
 SRCS = srcs/main.cpp srcs/draw.cpp srcs/draw_utils.cpp srcs/hook.cpp \
-		srcs/check_map.cpp srcs/check_file.cpp srcs/print_error.cpp \
+		srcs/check_map.cpp srcs/check_file.cpp \
 		srcs/check_path.cpp srcs/Game.cpp srcs/Map.cpp srcs/Player.cpp
 OBJS = $(SRCS:.cpp=.o)
 CFLAGS = -Wall -Wextra -Werror

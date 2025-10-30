@@ -13,13 +13,13 @@ class Player {
 		Player();
 		~Player();
         Player(int, int);
-        Player &operator=(const Player &);
-		const int getYPos() const;
-		const int getXPos() const;
+        Player      &operator=(const Player &);
+		const int   getYPos() const;
+		const int   getXPos() const;
 
-        void XMove(int);
-        void YMove(int);
-        void move();
+        void        XMove(int);
+        void        YMove(int);
+        void        move();
 };
 
 #endif

@@ -1,4 +1,5 @@
-#include "../includes/so_long.hpp"
+#include "../includes/Game.hpp"
+#include "../includes/hook.hpp"
 
 Game::Game() :
     mlx(NULL),
@@ -6,10 +7,13 @@ Game::Game() :
 
 Game::~Game() {}
 
-Game::Game(Map &map) :
+Game::Game(const string &map_file) :
+    map(Map(map_file)),
     mlx(NULL),
-    win(NULL),
-    map(map) {}
+    win(NULL)
+{
+    this->map.isValidMap();
+}
 
 const Map& Game::getMap() const  { return this->map; }
 

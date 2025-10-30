@@ -1,4 +1,3 @@
-#include <iostream>
 #include "../includes/Game.hpp"
 
 void	save_image(void *mlx, Image &img, char *file)

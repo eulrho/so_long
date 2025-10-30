@@ -1,4 +1,18 @@
-#include "../includes/so_long.hpp"
+#include "../includes/Game.hpp"
+
+int	render_next_frame(void *param)
+{
+	Game *game = static_cast<Game*>(param);
+	mlx_clear_window(game->mlx, game->win);
+	game->drawMap();
+	return (0);
+}
+
+int	x_close(int keycode, void *param)
+{
+	exit(0);
+	return (0);
+}
 
 int	key_hook(int keycode, void *param)
 {
@@ -16,19 +30,5 @@ int	key_hook(int keycode, void *param)
 		x_close(0, game);
 	if (game->isExit())
 		x_close(0, game);
-	return (0);
-}
-
-int	render_next_frame(void *param)
-{
-	Game *game = static_cast<Game*>(param);
-	mlx_clear_window(game->mlx, game->win);
-	game->drawMap();
-	return (0);
-}
-
-int	x_close(int keycode, void *param)
-{
-	exit(0);
 	return (0);
 }

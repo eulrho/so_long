@@ -24,18 +24,6 @@ using namespace std;
 # define KEY_PRESS 2
 # define EXIT_BUTTON 17
 
-// error codes
-# define VALID 1
-# define OTHER_CHARACTERS 2
-# define MEMORY 3
-# define FILE_NAME 4
-# define STANDARD_INPUT 5
-# define INVALID_FILE 6
-# define INVALID_MAP 7
-# define INVALID_PATH 8
-# define MAP_SIZE 9
-# define OVER_FLOW 10
-
 // image path
 # define TILE "textures/floor.xpm"
 # define WALL "textures/crack.xpm"
@@ -62,27 +50,28 @@ class Game {
 		Image	exit_img;
 		Map     map;
 		Player  player;
+
+		Game();
 		
 	public:
-		Game();
 		~Game();
-        Game(Map &);
+        Game(const string&);
 
-		void	*mlx;
-		void	*win;
+		void			*mlx;
+		void			*win;
 
-        const Map	&getMap() const;
-		void		initializeGame();
-		void		drawMap();
-		void		drawPlayer(int, int);
-		void		drawTile(int, int);
-		void		drawCollection(int, int);
-		void		drawExit(int, int);
-		void		drawWall(int, int);
-		void		startGame();
-		bool		isValidLoad(int, int);
-		void		move(int, int);
-		bool		isExit();
+        const Map		&getMap() const;
+		void			initializeGame();
+		void			drawMap();
+		void			drawPlayer(int, int);
+		void			drawTile(int, int);
+		void			drawCollection(int, int);
+		void			drawExit(int, int);
+		void			drawWall(int, int);
+		void			startGame();
+		bool			isValidLoad(int, int);
+		void			move(int, int);
+		bool			isExit();
 };
 
 #endif

@@ -1,55 +1,52 @@
-#include "../includes/so_long.hpp"
+#include "../includes/Map.hpp"
 
-int start_cnt = 0;
-int end_cnt = 0;
-
-void	is_valid_map_config(Map& map, int y, int x)
+void	Map::isValidMapConfig(int y, int x, int &start_cnt, int &end_cnt)
 {
-	if ((y == 0 || y == map.getYSize() - 1) && !map.isEqualChar(y, x, '1'))
-		print_error(INVALID_MAP);
-	if ((x == 0 || x == map.getXSize() - 1) && !map.isEqualChar(y, x, '1'))
-		print_error(INVALID_MAP);
-	if (!map.isEqualChar(y, x, '0') && !map.isEqualChar(y, x, '1')
-			&& !map.isEqualChar(y, x, 'C') && !map.isEqualChar(y, x, 'E')
-			&& !map.isEqualChar(y, x, 'P'))
-		print_error(INVALID_MAP);
-	if (map.isEqualChar(y, x, 'P'))
+	if ((y == 0 || y == this->y_size - 1) && !this->isEqualChar(y, x, '1'))
+		this->printError(INVALID_MAP);
+	if ((x == 0 || x == this->x_size - 1) && !this->isEqualChar(y, x, '1'))
+		this->printError(INVALID_MAP);
+	if (!this->isEqualChar(y, x, '0') && !this->isEqualChar(y, x, '1')
+			&& !this->isEqualChar(y, x, 'C') && !this->isEqualChar(y, x, 'E')
+			&& !this->isEqualChar(y, x, 'P'))
+		this->printError(INVALID_MAP);
+	if (this->isEqualChar(y, x, 'P'))
 	{
-		map.setStartY(y);
-		map.setStartX(x);
+		this->setStartY(y);
+		this->setStartX(x);
 		start_cnt++;
 	}
-	else if (map.isEqualChar(y, x, 'C'))
-		map.addCollectionCnt();
-	else if (map.isEqualChar(y, x, 'E'))
+	else if (this->isEqualChar(y, x, 'C'))
+		this->addCollectionCnt();
+	else if (this->isEqualChar(y, x, 'E'))
 		end_cnt++;
 }
 
-void	is_valid_config_count(const int collection_cnt)
+void	Map::isValidConfigCount(const int &end_cnt, const int &start_cnt)
 {
-	if (collection_cnt == 0)
-		print_error(INVALID_MAP);
+	if (this->collection_cnt == 0)
+		this->printError(INVALID_MAP);
 	if (end_cnt != 1)
-		print_error(INVALID_MAP);
+		this->printError(INVALID_MAP);
 	if (start_cnt != 1)
-		print_error(INVALID_MAP);
+		this->printError(INVALID_MAP);
 }
 
-void	is_valid_rectangle(const vector<string>& contents, int y, int x_size)
+void	Map::isValidRectangle(int y)
 {
-	if (contents[y].size() != x_size)
-		print_error(MAP_SIZE);
+	if (this->contents[y].size() != this->x_size)
+		this->printError(MAP_SIZE);
 }
 
-void	is_valid_map(Map &map)
-{
-	const vector<string>& contents = map.getContents();
-	
-	for (int y = 0; y < (int)map.getYSize(); y++) {
-		is_valid_rectangle(contents, y, (int)map.getXSize());
-		for (int x = 0; x < (int)map.getXSize(); x++)
-			is_valid_map_config(map, y, x);
+void	Map::isValidMap()
+{	
+	int start_cnt = 0;
+	int end_cnt = 0;
+	for (int y = 0; y < (int)this->y_size; y++) {
+		this->isValidRectangle(y);
+		for (int x = 0; x < (int)this->x_size; x++)
+			this->isValidMapConfig(y, x, start_cnt, end_cnt);
 	}
-	is_valid_config_count(map.getCollectionCnt());
-	is_valid_path(map);
+	this->isValidConfigCount(start_cnt, end_cnt);
+	this->isValidPath();
 }
