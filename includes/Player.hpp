@@ -14,8 +14,8 @@ class Player {
 		~Player();
         Player(int, int);
         Player      &operator=(const Player &);
-		const int   getYPos() const;
-		const int   getXPos() const;
+		const int&  getYPos() const;
+		const int&  getXPos() const;
 
         void        XMove(int);
         void        YMove(int);

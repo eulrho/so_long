@@ -19,3 +19,9 @@ void	Game::drawMap()
 		}
 	}
 }
+
+void	Game::reDraw()
+{
+	mlx_clear_window(this->mlx, this->win);
+	this->drawMap();
+}

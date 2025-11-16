@@ -2,9 +2,9 @@
 
 void	Map::isValidMapConfig(int y, int x, int &start_cnt, int &end_cnt)
 {
-	if ((y == 0 || y == this->y_size - 1) && !this->isEqualChar(y, x, '1'))
+	if ((y == 0 || y == (int)this->y_size - 1) && !this->isEqualChar(y, x, '1'))
 		this->printError(INVALID_MAP);
-	if ((x == 0 || x == this->x_size - 1) && !this->isEqualChar(y, x, '1'))
+	if ((x == 0 || x == (int)this->x_size - 1) && !this->isEqualChar(y, x, '1'))
 		this->printError(INVALID_MAP);
 	if (!this->isEqualChar(y, x, '0') && !this->isEqualChar(y, x, '1')
 			&& !this->isEqualChar(y, x, 'C') && !this->isEqualChar(y, x, 'E')

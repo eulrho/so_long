@@ -3,13 +3,15 @@
 int	render_next_frame(void *param)
 {
 	Game *game = static_cast<Game*>(param);
-	mlx_clear_window(game->mlx, game->win);
-	game->drawMap();
+	game->reDraw();
 	return (0);
 }
 
 int	x_close(int keycode, void *param)
 {
+	(void)keycode;
+	Game *game = static_cast<Game*>(param);
+	game->stopSound();
 	exit(0);
 	return (0);
 }

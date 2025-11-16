@@ -49,15 +49,15 @@ void Map::subCollectionCnt(int y, int x) {
 
 const vector<string>& Map::getContents() const { return this->contents; }
 
-const size_t Map::getYSize() const { return this->y_size; }
+const size_t& Map::getYSize() const { return this->y_size; }
 
-const size_t Map::getXSize() const { return this->x_size; }
+const size_t& Map::getXSize() const { return this->x_size; }
 
-const int Map::getCollectionCnt() const { return this->collection_cnt; }
+const int& Map::getCollectionCnt() const { return this->collection_cnt; }
 
-const int Map::getStartY() const { return this->start_y; }
+const int& Map::getStartY() const { return this->start_y; }
 
-const int Map::getStartX() const { return this->start_x; }
+const int& Map::getStartX() const { return this->start_x; }
 
 bool Map::isEqualChar(int y, int x, char ch) {
     return this->contents[y][x] == ch;

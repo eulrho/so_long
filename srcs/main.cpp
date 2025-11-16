@@ -9,7 +9,6 @@ int	main(int argc, char **argv)
 	}
 	const string map_file = string(argv[1]);
 	Game game(map_file);
-	game.initializeGame();
 	game.startGame();
 	return 0;
 }

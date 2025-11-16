@@ -4,8 +4,10 @@
 extern "C" {
 	# include "../mlx/mlx.h"
 }
+# include <cstdlib>
 # include "./Map.hpp"
 # include "./Player.hpp"
+# include "../bass24-osx/c/bass.h"
 
 using namespace std;
 
@@ -32,6 +34,13 @@ using namespace std;
 # define COLLECTION "textures/rat.xpm"
 # define PLAYER "textures/doctor_64.xpm"
 
+// bgm path
+# define BACKGROUND "/Users/rho-eul/study/so_long/bgm/game_bgm.mp3"
+# define WALK "/Users/rho-eul/study/so_long/bgm/walk.mp3"
+# define MOUSE "/Users/rho-eul/study/so_long/bgm/mouse.mp3"
+# define EXIT "/Users/rho-eul/study/so_long/bgm/exit.mp3"
+# define CLEAR "/Users/rho-eul/study/so_long/bgm/clear.mp3"
+
 // execution name
 # define GAME_NAME "so_long"
 
@@ -50,15 +59,18 @@ class Game {
 		Image	exit_img;
 		Map     map;
 		Player  player;
+		void	*mlx;
+		void	*win;
+		HSTREAM backgroundHandle;
+		HSTREAM walkHandle;
+		HSTREAM mouseHandle;
+		HSTREAM exitHandle;
 
 		Game();
 		
 	public:
 		~Game();
         Game(const string&);
-
-		void			*mlx;
-		void			*win;
 
         const Map		&getMap() const;
 		void			initializeGame();
@@ -72,6 +84,12 @@ class Game {
 		bool			isValidLoad(int, int);
 		void			move(int, int);
 		bool			isExit();
+		void 			soundInit();
+		void 			printError(int error_no);
+		void			reDraw();
+		void 			end();
+		void 			stopSound();
+		void 			playSound(HSTREAM);
 };
 
 #endif
