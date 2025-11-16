@@ -40,11 +40,11 @@ class Map {
         void                    subCollectionCnt(int, int);
 
 		const vector<string>&   getContents() const;
-        const size_t            getYSize() const;
-        const size_t            getXSize() const;
-        const int               getCollectionCnt() const;
-        const int               getStartY() const;
-        const int               getStartX() const;
+        const size_t&           getYSize() const;
+        const size_t&           getXSize() const;
+        const int&              getCollectionCnt() const;
+        const int&              getStartY() const;
+        const int&              getStartX() const;
 
 		bool                    isEqualChar(int, int, char);
         void			        isValidFile(ifstream&, const string&);

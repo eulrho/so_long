@@ -10,6 +10,8 @@ int	render_next_frame(void *param)
 
 int	x_close(int keycode, void *param)
 {
+	(void)keycode;
+	(void)param;
 	exit(0);
 	return (0);
 }

@@ -4,6 +4,7 @@
 extern "C" {
 	# include "../mlx/mlx.h"
 }
+# include <cstdlib>
 # include "./Map.hpp"
 # include "./Player.hpp"
 

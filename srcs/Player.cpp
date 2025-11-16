@@ -32,6 +32,6 @@ void Player::move() {
     cout << "moves : " << this->foot_print << '\n';
 }
 
-const int Player::getYPos() const { return this->y_pos; }
+const int& Player::getYPos() const { return this->y_pos; }
 
-const int Player::getXPos() const { return this->x_pos; }
+const int& Player::getXPos() const { return this->x_pos; }
