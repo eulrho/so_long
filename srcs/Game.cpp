@@ -16,7 +16,6 @@ Game::Game() :
 Game::~Game() {}
 
 Game::Game(const string &map_file) :
-    map(Map(map_file)),
     mlx(NULL),
     win(NULL),
 	isEnd(false),
@@ -27,10 +26,17 @@ Game::Game(const string &map_file) :
 	start_time(clock()),
 	attack_time(0)
 {
-	srand((unsigned int)time(NULL));
-    this->map.isValidMap();
-	this->player = Player(this->map.getStartY(), this->map.getStartX());
-	this->monster = Monster(this->map.getMonsterStartY(), this->map.getMonsterStartX());
+	try {
+		srand((unsigned int)time(NULL));
+		this->map = Map(map_file);
+		this->map.isValidMap();
+		this->player = Player(this->map.getStartY(), this->map.getStartX());
+		this->monster = Monster(this->map.getMonsterStartY(), this->map.getMonsterStartX());
+	}
+	catch(const exception& e) {
+		cerr << "\033[1;31m" << "Error\n" << e.what() << "\033[0m";
+		exit(1);
+	}
 }
 
 void Game::initializeGame() {

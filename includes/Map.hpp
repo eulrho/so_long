@@ -8,17 +8,12 @@
 using namespace std;
 
 // error codes
-# define VALID 1
-# define OTHER_CHARACTERS 2
-# define MEMORY 3
-# define FILE_NAME 4
-
-// # define STANDARD_INPUT 5
-# define INVALID_FILE 6
-# define INVALID_MAP 7
-# define INVALID_PATH 8
-# define MAP_SIZE 9
-# define OVER_FLOW 10
+# define VALID 0
+# define FILE_NAME 1
+# define INVALID_FILE 2
+# define INVALID_MAP 3
+# define INVALID_PATH 4
+# define MAP_SIZE 5
 
 class Map {
 	private:
@@ -30,7 +25,16 @@ class Map {
 		int 			monster_start_y;
 		int 			monster_start_x;
         int             collection_cnt;
-		
+
+		const char*		getErrorMessage(int) const;
+
+		class InvalidMapException : public exception {
+			private:
+				const char* message;
+			public:
+				InvalidMapException(const char* message) : message(message) {};
+				const char* what() const throw();
+		};
 	public:
 		Map();
 		~Map();
@@ -62,7 +66,6 @@ class Map {
         bool                    checkReached(int**);
         void			        isValidPath();
         vector<string>	        readMap(const string&);
-        void			        printError(int);
 		void			        find(int**, int, int);
 };
 

@@ -12,7 +12,7 @@ int	is_valid_file_name(const string &file_name)
 void	Map::isValidFile(ifstream &file, const string &file_name)
 {
 	if (!file.is_open())
-		this->printError(INVALID_FILE);
+		throw InvalidMapException(this->getErrorMessage(INVALID_FILE));
 	if (is_valid_file_name(file_name) == FILE_NAME)
-		this->printError(FILE_NAME);
+		throw InvalidMapException(this->getErrorMessage(FILE_NAME));
 }

@@ -13,4 +13,4 @@ const char* Game::getErrorMessage(int error_no) const
 	else return "some other mystery problem";
 }
 
-const char* Game::BassException::what() const throw() { return message.c_str(); }
+const char* Game::BassException::what() const throw() { return message; }

@@ -40,7 +40,7 @@ void	Map::isValidPath()
 	
 	this->find(visited, this->start_y, this->start_x);
 	if (!this->checkReached(visited))
-		this->printError(INVALID_PATH);
+		throw InvalidMapException(this->getErrorMessage(INVALID_PATH));
 	
 	for(int i = 0; i < (int)this->y_size; i++)
 		delete[] visited[i];

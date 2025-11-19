@@ -5,7 +5,7 @@ SRCS = srcs/main.cpp srcs/draw.cpp srcs/draw_utils.cpp srcs/hook.cpp \
 		srcs/sound.cpp srcs/exit_sprite.cpp srcs/collection_sprite.cpp \
 		srcs/player_sprite.cpp srcs/Object.cpp srcs/Monster.cpp \
 		srcs/move_monster.cpp srcs/monster_sprite.cpp srcs/game_end.cpp \
-		srcs/game_error.cpp
+		srcs/game_error.cpp srcs/map_error.cpp
 OBJS = $(SRCS:.cpp=.o)
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long

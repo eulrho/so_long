@@ -3,9 +3,9 @@
 void	Map::isValidMapConfig(int y, int x, int &player_cnt, int &end_cnt, int &monster_cnt)
 {
 	if ((y == 0 || y == (int)this->y_size - 1) && !this->isEqualChar(y, x, '1'))
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 	if ((x == 0 || x == (int)this->x_size - 1) && !this->isEqualChar(y, x, '1'))
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 
 	if (this->isEqualChar(y, x, 'P'))
 	{
@@ -26,25 +26,25 @@ void	Map::isValidMapConfig(int y, int x, int &player_cnt, int &end_cnt, int &mon
 		monster_cnt++;
 	}
 	else if (!(this->isEqualChar(y, x, '0') || this->isEqualChar(y, x, '1')))
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 }
 
 void	Map::isValidConfigCount(const int &end_cnt, const int &player_cnt, const int &monster_cnt)
 {
 	if (this->collection_cnt == 0)
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 	if (end_cnt != 1)
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 	if (player_cnt != 1)
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 	if (monster_cnt >= 2)
-		this->printError(INVALID_MAP);
+		throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 }
 
 void	Map::isValidRectangle(int y)
 {
 	if (this->contents[y].size() != this->x_size)
-		this->printError(MAP_SIZE);
+		throw InvalidMapException(this->getErrorMessage(MAP_SIZE));
 }
 
 void	Map::isValidMap()

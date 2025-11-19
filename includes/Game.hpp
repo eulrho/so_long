@@ -106,9 +106,9 @@ class Game {
 
 		class BassException : public exception {
 			private:
-				string message;
+				const char* message;
 			public:
-				BassException(string message) : message(message) {};
+				BassException(const char* message) : message(message) {};
 				const char* what() const throw();
 		};
 		
