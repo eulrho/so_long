@@ -20,7 +20,7 @@ void	Game::changePlayerImage()
 		{
 			if (this->player.getXPos() == x && this->player.getYPos() == y)
 			{
-				if (this->map.isEqualChar(y, x, '0'))
+				if (this->map.isEqualChar(y, x, '0') && !(this->monster.getYPos() == y && this->monster.getXPos() == x))
 					this->drawTile(x, y);
 				this->drawPlayer(x, y);
 			}

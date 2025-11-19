@@ -1,6 +1,6 @@
 #include <string>
 #include "../includes/Game.hpp"
-#include <iostream>
+
 void	Game::changeMonsterSprite()
 {
 	int number = this->monster_seq / 10 + 1;
