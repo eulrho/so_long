@@ -2,14 +2,13 @@
 
 void	Game::changeCollectionSprite()
 {
-	if (this->collection_seq % 23 == 0) {
+	if (this->collection_seq % 13 == 0) {
 		int number = this->collection_seq / 10 + 1;
 		string file_path = "textures/rat" + to_string(number) + ".xpm";
 		this->saveImage(this->collection_img, (char*)file_path.c_str());
 
 		if (number == 10) this->collection_seq = -1;
 	}
-	this->collection_seq++;
 }
 
 void	Game::changeCollectionImage()
@@ -25,4 +24,5 @@ void	Game::changeCollectionImage()
 			}
 		}
 	}
+	this->collection_seq++;
 }
