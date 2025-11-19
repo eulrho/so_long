@@ -1,29 +1,20 @@
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
-enum DIRECTION {
-	LEFT, RIGHT
-};
+#include "./Object.hpp"
 
-class Player {
+class Player : public Object{
 	private:
-        int		y_pos;
-        int		x_pos;
-		int		direction;
-
-		void	setDirection(int);
-		
+		int hp;
 	public:
 		Player();
 		~Player();
 		Player(int, int);
 
         Player      &operator=(const Player &);
-		const int&  getYPos() const;
-		const int&  getXPos() const;
-		const int&	getDirection() const;
 
-        void        walk(int, int);
+		const int	&getHp() const;
+		void		damage();
 };
 
 #endif

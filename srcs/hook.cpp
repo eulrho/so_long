@@ -1,11 +1,13 @@
 #include "../includes/Game.hpp"
-#include <iostream>
+
 int	render_next_frame(void *param)
 {
 	Game *game = static_cast<Game*>(param);
 	game->changeExitImage();
 	game->changeCollectionImage();
+	game->changeMonsterImage();
 	game->changePlayerImage();
+	game->checkCrash();
 	return (0);
 }
 
@@ -33,6 +35,6 @@ int	key_hook(int keycode, void *param)
 	else if (keycode == ESC)
 		x_close(0, game);
 	if (game->isExit())
-		x_close(0, game);
+		game->playerWin();
 	return (0);
 }

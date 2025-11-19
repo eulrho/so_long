@@ -3,11 +3,15 @@
 
 extern "C" {
 	# include "../mlx/mlx.h"
+	# include "../bass24-osx/c/bass.h"
 }
 # include <cstdlib>
+# include <ctime>
+# include <string>
+# include <stdexcept>
 # include "./Map.hpp"
 # include "./Player.hpp"
-# include "../bass24-osx/c/bass.h"
+# include "./Monster.hpp"
 
 using namespace std;
 
@@ -54,8 +58,10 @@ class Game {
 		Image		wall_img;
 		Image		collection_img;
 		Image		exit_img;
+		Image		monster_img;
 		Map     	map;
 		Player  	player;
+		Monster		monster;
 		void		*mlx;
 		void		*win;
 		HSTREAM 	backgroundHandle;
@@ -66,37 +72,63 @@ class Game {
 		int			exit_seq;
 		int 		collection_seq;
 		int 		player_seq;
+		int 		monster_seq;
+		clock_t		start_time;
+		clock_t 	attack_time;
 
 		Game();
+
+		const Map	&getMap() const;
+		void		initializeGame();
+
+		void		drawMap();
+		void		drawPlayer(int, int);
+		void		drawTile(int, int);
+		void		drawCollection(int, int);
+		void		drawExit(int, int);
+		void		drawWall(int, int);
+		void		drawMonster(int, int);
+		void		saveImage(Image&, char*);
+
+		bool		isValidLoad(int, int);
+
+		void		soundInit();
+		void 		playSound(HSTREAM);
+
+		void 		changeExitSprite();
+		void		changeCollectionSprite();
+		void		changePlayerSprite();
+		void 		changeMonsterSprite();
+
+		void 		randomMonsterMove();
+
+		const char*	getErrorMessage(int) const;
+		void 		playerLose();
+
+		class BassException : public exception {
+			private:
+				string message;
+			public:
+				BassException(string message) : message(message) {};
+				const char* what() const throw();
+		};
 		
 	public:
 		~Game();
         Game(const string&);
 
-        const Map		&getMap() const;
-		void			initializeGame();
-		void			drawMap();
-		void			drawPlayer(int, int);
-		void			drawTile(int, int);
-		void			drawCollection(int, int);
-		void			drawExit(int, int);
-		void			drawWall(int, int);
-		void			startGame();
-		bool			isValidLoad(int, int);
-		void			move(int, int);
-		bool			isExit();
-		void 			soundInit();
-		void 			printError(int error_no);
-		void			reDraw();
-		void 			stopSound();
-		void 			playSound(HSTREAM);
-		void 			changeExitSprite();
-		void 			changeExitImage();
-		void 			changeCollectionSprite();
-		void 			changeCollectionImage();
-		void 			changePlayerSprite();
-		void 			changePlayerImage();
-		void 			saveImage(Image&, char*);
+		void	startGame();
+		void 	playerWin();
+		void	move(int, int);
+		bool	isExit();
+		void 	checkCrash();
+
+		void	changeExitImage();
+		void 	changeCollectionImage();
+		void 	changePlayerImage();
+		void 	changeMonsterImage();
+
+		void 	stopSound();
 };
 
 #endif

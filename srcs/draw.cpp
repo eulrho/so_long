@@ -16,12 +16,8 @@ void	Game::drawMap()
 				this->drawExit(x, y);
 			if (this->player.getXPos() == x && this->player.getYPos() == y)
 				this->drawPlayer(x, y);
+			if (this->monster.getXPos() == x && this->monster.getYPos() == y)
+				this->drawMonster(x, y);
 		}
 	}
-}
-
-void	Game::reDraw()
-{
-	mlx_clear_window(this->mlx, this->win);
-	this->drawMap();
 }

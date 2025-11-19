@@ -43,3 +43,10 @@ void	Game::drawPlayer(int x, int y)
 	mlx_put_image_to_window(this->mlx, this->win, this->player_img.image,
 		x * IMAGE_SIZE, y * IMAGE_SIZE);
 }
+
+void	Game::drawMonster(int x, int y)
+{
+	this->changeMonsterSprite();
+	mlx_put_image_to_window(this->mlx, this->win, this->monster_img.image,
+							x * IMAGE_SIZE, y * IMAGE_SIZE);
+}

@@ -3,7 +3,9 @@ SRCS = srcs/main.cpp srcs/draw.cpp srcs/draw_utils.cpp srcs/hook.cpp \
 		srcs/check_map.cpp srcs/check_file.cpp \
 		srcs/check_path.cpp srcs/Game.cpp srcs/Map.cpp srcs/Player.cpp \
 		srcs/sound.cpp srcs/exit_sprite.cpp srcs/collection_sprite.cpp \
-		srcs/player_sprite.cpp
+		srcs/player_sprite.cpp srcs/Object.cpp srcs/Monster.cpp \
+		srcs/move_monster.cpp srcs/monster_sprite.cpp srcs/game_end.cpp \
+		srcs/game_error.cpp
 OBJS = $(SRCS:.cpp=.o)
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long

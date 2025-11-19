@@ -1,7 +1,6 @@
+#include <iostream>
 #include "../includes/Game.hpp"
 #include "../includes/hook.hpp"
-
-#include <iostream>
 
 Game::Game() :
     mlx(NULL),
@@ -9,7 +8,10 @@ Game::Game() :
 	isEnd(false),
 	exit_seq(0),
 	collection_seq(0),
-	player_seq(0) {}
+	player_seq(0),
+	monster_seq(0),
+	start_time(clock()),
+	attack_time(0) {}
 
 Game::~Game() {}
 
@@ -20,11 +22,15 @@ Game::Game(const string &map_file) :
 	isEnd(false),
 	exit_seq(0),
 	collection_seq(0),
-	player_seq(0)
+	player_seq(0),
+	monster_seq(0),
+	start_time(clock()),
+	attack_time(0)
 {
+	srand((unsigned int)time(NULL));
     this->map.isValidMap();
 	this->player = Player(this->map.getStartY(), this->map.getStartX());
-	this->initializeGame();
+	this->monster = Monster(this->map.getMonsterStartY(), this->map.getMonsterStartX());
 }
 
 const Map& Game::getMap() const  { return this->map; }
@@ -38,14 +44,21 @@ void Game::initializeGame() {
 }
 
 void Game::startGame() {
-    mlx_hook(this->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, this);
-	mlx_hook(this->win, EXIT_BUTTON, 0, x_close, this);
-	mlx_loop_hook(this->mlx, render_next_frame, this);
+	try {
+		this->initializeGame();
 
-	if (!BASS_ChannelPlay(this->backgroundHandle, FALSE))
-		this->printError(BASS_ErrorGetCode());
-	this->drawMap();
-	mlx_loop(this->mlx);
+		mlx_hook(this->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, this);
+		mlx_hook(this->win, EXIT_BUTTON, 0, x_close, this);
+		mlx_loop_hook(this->mlx, render_next_frame, this);
+
+		this->playSound(this->backgroundHandle);
+		this->drawMap();
+		mlx_loop(this->mlx);
+	}
+	catch(const exception& e) {
+		cerr << "\033[1;31m" << "Error\n" << e.what() << "\033[0m";
+		exit(1);
+	}
 }
 
 bool Game::isValidLoad(int y, int x) {
@@ -76,18 +89,15 @@ bool Game::isExit() {
         && this->isEnd);
 }
 
-void Game::printError(int error_no)
+void Game::checkCrash()
 {
-	cerr << "Error\n";
-	if (error_no == BASS_ERROR_FILEOPEN)
-		cerr << "can't open the file";
-	else if (error_no == BASS_ERROR_HANDLE)
-		cerr << "invalid handle";
-	else if (error_no == BASS_ERROR_INIT)
-		cerr << "BASS_Init has not been successfully called";
-	else if (error_no == BASS_ERROR_NOCHAN)
-		cerr << "can't get a free channel";
-	else
-		cerr << "some other mystery problem";
-	exit(1);
+	if (this->monster.getYPos() == -1) return ;
+	if (this->monster.getYPos() == this->player.getYPos() && this->monster.getXPos() == this->player.getXPos())
+	{
+		if (this->attack_time != 0 && (int)((double)(clock() - this->attack_time) / CLOCKS_PER_SEC) < 1) return;
+		this->attack_time = clock();
+		this->player.damage();
+	}
+	if (this->player.getHp() == 0)
+		this->playerLose();
 }
