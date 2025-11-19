@@ -28,8 +28,7 @@ void Game::randomMonsterMove()
 	for (int i=0; i<4; i++) {
 		int new_y = this->monster.getYPos() + dy[i];
 		int new_x = this->monster.getXPos() + dx[i];
-		if (this->map.isEqualChar(new_y, new_x, 'E') || this->map.isEqualChar(new_y, new_x, 'C')
-					|| this->map.isEqualChar(new_y, new_x, '1'))
+		if (this->map.isEqualChar(new_y, new_x, 'E') || this->map.isEqualChar(new_y, new_x, '1'))
 			continue ;
 		tmp.emplace_back(dy[i], dx[i]);
 	}

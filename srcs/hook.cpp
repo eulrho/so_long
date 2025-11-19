@@ -4,8 +4,8 @@ int	render_next_frame(void *param)
 {
 	Game *game = static_cast<Game*>(param);
 	game->changeExitImage();
-	game->changeCollectionImage();
 	game->changeMonsterImage();
+	game->changeCollectionImage();
 	game->changePlayerImage();
 	game->checkCrash();
 	return (0);

@@ -1,15 +1,14 @@
 #include <string>
 #include "../includes/Game.hpp"
 
-void	Game::changePlayerSprite()
-{
+void	Game::changePlayerSprite() {
 	string direction = this->player.getDirection() == LEFT ? "left" : "right";
 	int number = this->player_seq / 10 + 1;
 	string file_path = "textures/player_" + direction + to_string(number) + ".xpm";
 
 	if (number == 12) this->player_seq = 0;
 	else this->player_seq++;
-	this->saveImage(this->player_img, (char*)file_path.c_str());
+	this->saveImage(this->player_img, (char *) file_path.c_str());
 }
 
 void	Game::changePlayerImage()

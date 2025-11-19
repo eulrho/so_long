@@ -19,7 +19,8 @@ void	Game::changeCollectionImage()
 		{
 			if (this->map.isEqualChar(y, x, 'C'))
 			{
-				this->drawTile(x, y);
+				if (!(this->monster.getYPos() == y && this->monster.getXPos() == x))
+					this->drawTile(x, y);
 				this->drawCollection(x, y);
 			}
 		}
