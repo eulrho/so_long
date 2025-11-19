@@ -4,15 +4,19 @@
 Map::Map() :
     y_size(0),
     x_size(0),
-    start_y(0),
-    start_x(0),
+    start_y(-1),
+    start_x(-1),
+	monster_start_y(-1),
+	monster_start_x(-1),
     collection_cnt(0) {}
 
 Map::~Map() {}
 
 Map::Map(const string& map_file) :
-    start_y(0),
-    start_x(0),
+    start_y(-1),
+    start_x(-1),
+	monster_start_y(-1),
+	monster_start_x(-1),
     collection_cnt(0)
 {
     this->contents = this->readMap(map_file);
@@ -32,6 +36,8 @@ Map &Map::operator=(const Map &other) {
 		this->start_y = other.start_y;
         this->start_x = other.start_x;
         this->collection_cnt = other.collection_cnt;
+		this->monster_start_y = other.monster_start_y;
+		this->monster_start_x = other.monster_start_x;
 	}
 	return *this;
 }
@@ -39,6 +45,10 @@ Map &Map::operator=(const Map &other) {
 void Map::setStartY(int new_start_y) { this->start_y = new_start_y; }
 
 void Map::setStartX(int new_start_x) { this->start_x = new_start_x; }
+
+void Map::setMonsterStartY(int new_monster_start_y) { this->monster_start_y = new_monster_start_y; }
+
+void Map::setMonsterStartX(int new_monster_start_x) { this->monster_start_x = new_monster_start_x; }
 
 void Map::addCollectionCnt() { this->collection_cnt++; }
 
@@ -59,32 +69,12 @@ const int& Map::getStartY() const { return this->start_y; }
 
 const int& Map::getStartX() const { return this->start_x; }
 
+const int& Map::getMonsterStartY() const { return this->monster_start_y; }
+
+const int& Map::getMonsterStartX() const { return this->monster_start_x; }
+
 bool Map::isEqualChar(int y, int x, char ch) {
     return this->contents[y][x] == ch;
-}
-
-void Map::printError(int error_no)
-{
-	cerr << "Error\n";
-	if (error_no == OTHER_CHARACTERS)
-		cerr << "other characters on the map";
-	else if (error_no == MEMORY)
-		cerr << "memory error";
-	else if (error_no == FILE_NAME)
-		cerr << "invalid file name";
-	// else if (error_no == STANDARD_INPUT)
-	// 	cerr << "invalid input";
-	else if (error_no == INVALID_FILE)
-		cerr << "file is empty or not found";
-	else if (error_no == INVALID_MAP)
-		cerr << "invalid configuration on map";
-	else if (error_no == INVALID_PATH)
-		cerr << "path not found";
-	else if (error_no == MAP_SIZE)
-		cerr << "map is not rectangle";
-	else if (error_no == OVER_FLOW)
-		cerr << "overflow!!!!!!!!!";
-	exit(1);
 }
 
 vector<string>	Map::readMap(const string &map_file)
@@ -97,11 +87,11 @@ vector<string>	Map::readMap(const string &map_file)
 	while (getline(file, line))
 	{
 		if (line.empty())
-			this->printError(INVALID_MAP);
+			throw InvalidMapException(this->getErrorMessage(INVALID_MAP));
 		result.push_back(line);
 	}
 	if (result.empty())
-		this->printError(INVALID_FILE);
+		throw InvalidMapException(this->getErrorMessage(INVALID_FILE));
 	file.close();
 	return result;
 }

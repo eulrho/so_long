@@ -3,15 +3,20 @@
 int	render_next_frame(void *param)
 {
 	Game *game = static_cast<Game*>(param);
-	mlx_clear_window(game->mlx, game->win);
-	game->drawMap();
+	game->changeExitImage();
+	game->changeMonsterImage();
+	game->changeCollectionImage();
+	game->changePlayerImage();
+	game->checkCrash();
 	return (0);
 }
 
 int	x_close(int keycode, void *param)
 {
 	(void)keycode;
-	(void)param;
+
+	Game *game = static_cast<Game*>(param);
+	game->stopSound();
 	exit(0);
 	return (0);
 }
@@ -31,6 +36,6 @@ int	key_hook(int keycode, void *param)
 	else if (keycode == ESC)
 		x_close(0, game);
 	if (game->isExit())
-		x_close(0, game);
+		game->playerWin();
 	return (0);
 }

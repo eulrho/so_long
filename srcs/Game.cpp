@@ -1,61 +1,110 @@
+#include <iostream>
 #include "../includes/Game.hpp"
 #include "../includes/hook.hpp"
 
 Game::Game() :
     mlx(NULL),
-    win(NULL) {}
+    win(NULL),
+	isEnd(false),
+	exit_seq(0),
+	collection_seq(0),
+	player_seq(0),
+	monster_seq(0),
+	start_time(clock()),
+	attack_time(0) {}
 
 Game::~Game() {}
 
 Game::Game(const string &map_file) :
-    map(Map(map_file)),
     mlx(NULL),
-    win(NULL)
+    win(NULL),
+	isEnd(false),
+	exit_seq(0),
+	collection_seq(0),
+	player_seq(0),
+	monster_seq(0),
+	start_time(clock()),
+	attack_time(0)
 {
-    this->map.isValidMap();
+	try {
+		srand((unsigned int)time(NULL));
+		this->map = Map(map_file);
+		this->map.isValidMap();
+		this->player = Player(this->map.getStartY(), this->map.getStartX());
+		this->monster = Monster(this->map.getMonsterStartY(), this->map.getMonsterStartX());
+	}
+	catch(const exception& e) {
+		cerr << "\033[1;31m" << "Error\n" << e.what() << "\033[0m";
+		exit(1);
+	}
 }
-
-const Map& Game::getMap() const  { return this->map; }
 
 void Game::initializeGame() {
     this->mlx = mlx_init();
 	this->win = mlx_new_window(this->mlx, this->map.getXSize() * IMAGE_SIZE,
 			this->map.getYSize() * IMAGE_SIZE, (char*)GAME_NAME);
-	this->player.YMove(this->map.getStartY());
-    this->player.XMove(this->map.getStartX());
-	drawMap();
+	this->drawMap();
+	this->soundInit();
 }
 
 void Game::startGame() {
-    mlx_hook(this->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, this);
-	mlx_hook(this->win, EXIT_BUTTON, 0, x_close, this);
-	mlx_loop_hook(this->mlx, render_next_frame, this);
-	mlx_loop(this->mlx);
+	try {
+		this->initializeGame();
+
+		mlx_hook(this->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, this);
+		mlx_hook(this->win, EXIT_BUTTON, 0, x_close, this);
+		mlx_loop_hook(this->mlx, render_next_frame, this);
+
+		this->playSound(this->backgroundHandle);
+		this->drawMap();
+		mlx_loop(this->mlx);
+	}
+	catch(const exception& e) {
+		cerr << "\033[1;31m" << "Error\n" << e.what() << "\033[0m";
+		exit(1);
+	}
 }
 
 bool Game::isValidLoad(int y, int x) {
-    const vector<string>& contents = this->map.getContents();
-
-    if (contents[y][x] == '1')
+	if (this->map.isEqualChar(y, x, '1'))
 		return false;
-	if (contents[y][x] == 'C')
+	if (this->map.isEqualChar(y, x, 'C'))
 	{
+		this->playSound(this->mouseHandle);
         this->map.subCollectionCnt(y, x);
-		if (this->map.getCollectionCnt() == 0)
-			this->exit_img.image = NULL;
+		if (this->map.getCollectionCnt() == 0) {
+			this->isEnd = true;
+			this->playSound(this->exitHandle);
+		}
 	}
-    this->player.move();
 	return true;
 }
 
 void Game::move(int y_diff, int x_diff) {
     if (isValidLoad(this->player.getYPos() + y_diff, this->player.getXPos() + x_diff)) {
-        this->player.YMove(y_diff);
-        this->player.XMove(x_diff);
+		this->drawTile(this->player.getXPos(), this->player.getYPos());
+		this->playSound(this->walkHandle);
+		this->player.walk(y_diff, x_diff);
     }
 }
 
 bool Game::isExit() {
     return (this->map.isEqualChar(this->player.getYPos(), this->player.getXPos(), 'E')
-        && this->map.getCollectionCnt() == 0);
+        && this->isEnd);
+}
+
+void Game::checkCrash()
+{
+	if (this->monster.getYPos() == -1) return ;
+	if (this->monster.getYPos() == this->player.getYPos() && this->monster.getXPos() == this->player.getXPos())
+	{
+		if (this->attack_time != 0 && ((double)(clock() - this->attack_time) / CLOCKS_PER_SEC) <= 0.1) return;
+		this->attack_time = clock();
+		this->playSound(this->attackHandle);
+		this->player.damage();
+		this->drawTile(this->player.getHp(), 0);
+		this->drawWall(this->player.getHp(), 0);
+	}
+	if (this->player.getHp() == 0)
+		this->playerLose();
 }

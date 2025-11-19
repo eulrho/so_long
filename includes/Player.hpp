@@ -1,25 +1,20 @@
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
-using namespace std;
+#include "./Object.hpp"
 
-class Player {
+class Player : public Object{
 	private:
-        int	y_pos;
-        int	x_pos;
-        int	foot_print;
-		
+		int hp;
 	public:
 		Player();
 		~Player();
-        Player(int, int);
-        Player      &operator=(const Player &);
-		const int&  getYPos() const;
-		const int&  getXPos() const;
+		Player(int, int);
 
-        void        XMove(int);
-        void        YMove(int);
-        void        move();
+        Player      &operator=(const Player &);
+
+		const int	&getHp() const;
+		void		damage();
 };
 
 #endif
