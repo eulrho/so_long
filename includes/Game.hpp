@@ -40,7 +40,7 @@ using namespace std;
 # define WALK "/Users/rho-eul/study/so_long/bgm/walk.mp3"
 # define MOUSE "/Users/rho-eul/study/so_long/bgm/mouse.mp3"
 # define EXIT "/Users/rho-eul/study/so_long/bgm/exit.mp3"
-# define CLEAR "/Users/rho-eul/study/so_long/bgm/clear.mp3"
+# define ATTACK "/Users/rho-eul/study/so_long/bgm/fire.mp3"
 
 // execution name
 # define GAME_NAME "so_long"
@@ -68,6 +68,7 @@ class Game {
 		HSTREAM 	walkHandle;
 		HSTREAM 	mouseHandle;
 		HSTREAM 	exitHandle;
+		HSTREAM		attackHandle;
 		bool 		isEnd;
 		int			exit_seq;
 		int 		collection_seq;

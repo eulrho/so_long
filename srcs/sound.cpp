@@ -9,7 +9,8 @@ void Game::soundInit() {
 	this->walkHandle = BASS_StreamCreateFile(FALSE, WALK, 0, 0, 0);
 	this->mouseHandle = BASS_StreamCreateFile(FALSE, MOUSE, 0, 0, 0);
 	this->exitHandle = BASS_StreamCreateFile(FALSE, EXIT, 0, 0, 0);
-	if (!(this->backgroundHandle && this->walkHandle && this->mouseHandle && this->exitHandle))
+	this->attackHandle = BASS_StreamCreateFile(FALSE, ATTACK, 0, 0, 0);
+	if (!(this->backgroundHandle && this->walkHandle && this->mouseHandle && this->exitHandle && this->attackHandle))
 		throw BassException(this->getErrorMessage(BASS_ErrorGetCode()));
 }
 
@@ -22,6 +23,6 @@ void Game::playSound(HSTREAM handle)
 void Game::stopSound()
 {
 	if (!(BASS_ChannelStop(this->backgroundHandle) && BASS_StreamFree(this->backgroundHandle) && BASS_StreamFree(this->walkHandle)
-		&& BASS_StreamFree(this->mouseHandle) && BASS_StreamFree(this->exitHandle)))
+		&& BASS_StreamFree(this->mouseHandle) && BASS_StreamFree(this->exitHandle) && BASS_StreamFree(this->attackHandle)))
 		throw BassException(this->getErrorMessage(BASS_ErrorGetCode()));
 }

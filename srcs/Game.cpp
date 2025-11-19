@@ -100,6 +100,7 @@ void Game::checkCrash()
 	{
 		if (this->attack_time != 0 && (int)((double)(clock() - this->attack_time) / CLOCKS_PER_SEC) < 1) return;
 		this->attack_time = clock();
+		this->playSound(this->attackHandle);
 		this->player.damage();
 	}
 	if (this->player.getHp() == 0)
