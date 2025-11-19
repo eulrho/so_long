@@ -78,7 +78,6 @@ class Game {
 
 		Game();
 
-		const Map	&getMap() const;
 		void		initializeGame();
 
 		void		drawMap();

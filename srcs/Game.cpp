@@ -33,8 +33,6 @@ Game::Game(const string &map_file) :
 	this->monster = Monster(this->map.getMonsterStartY(), this->map.getMonsterStartX());
 }
 
-const Map& Game::getMap() const  { return this->map; }
-
 void Game::initializeGame() {
     this->mlx = mlx_init();
 	this->win = mlx_new_window(this->mlx, this->map.getXSize() * IMAGE_SIZE,
