@@ -27,12 +27,9 @@ using namespace std;
 # define EXIT_BUTTON 17
 
 // image path
-# define TILE "textures/floor.xpm"
-# define WALL "textures/crack.xpm"
+# define TILE "textures/crack.xpm"
+# define WALL "textures/rock.xpm"
 # define BEFORE_EXIT "textures/portal_bef.xpm"
-# define AFTER_EXIT "textures/portal_aft.xpm"
-# define COLLECTION "textures/rat.xpm"
-# define PLAYER "textures/doctor_64.xpm"
 
 // bgm path
 # define BACKGROUND "/Users/rho-eul/study/so_long/bgm/game_bgm.mp3"
@@ -52,19 +49,23 @@ struct Image {
 
 class Game {
 	private:
-		Image	player_img;
-		Image	tile_img;
-		Image	wall_img;
-		Image	collection_img;
-		Image	exit_img;
-		Map     map;
-		Player  player;
-		void	*mlx;
-		void	*win;
-		HSTREAM backgroundHandle;
-		HSTREAM walkHandle;
-		HSTREAM mouseHandle;
-		HSTREAM exitHandle;
+		Image		player_img;
+		Image		tile_img;
+		Image		wall_img;
+		Image		collection_img;
+		Image		exit_img;
+		Map     	map;
+		Player  	player;
+		void		*mlx;
+		void		*win;
+		HSTREAM 	backgroundHandle;
+		HSTREAM 	walkHandle;
+		HSTREAM 	mouseHandle;
+		HSTREAM 	exitHandle;
+		bool 		isEnd;
+		int			exit_seq;
+		int 		collection_seq;
+		int 		player_seq;
 
 		Game();
 		
@@ -87,9 +88,15 @@ class Game {
 		void 			soundInit();
 		void 			printError(int error_no);
 		void			reDraw();
-		void 			end();
 		void 			stopSound();
 		void 			playSound(HSTREAM);
+		void 			changeExitSprite();
+		void 			changeExitImage();
+		void 			changeCollectionSprite();
+		void 			changeCollectionImage();
+		void 			changePlayerSprite();
+		void 			changePlayerImage();
+		void 			saveImage(Image&, char*);
 };
 
 #endif

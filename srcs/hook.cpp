@@ -1,9 +1,11 @@
 #include "../includes/Game.hpp"
-
+#include <iostream>
 int	render_next_frame(void *param)
 {
 	Game *game = static_cast<Game*>(param);
-	game->reDraw();
+	game->changeExitImage();
+	game->changeCollectionImage();
+	game->changePlayerImage();
 	return (0);
 }
 

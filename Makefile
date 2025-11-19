@@ -2,7 +2,8 @@ CXX = c++
 SRCS = srcs/main.cpp srcs/draw.cpp srcs/draw_utils.cpp srcs/hook.cpp \
 		srcs/check_map.cpp srcs/check_file.cpp \
 		srcs/check_path.cpp srcs/Game.cpp srcs/Map.cpp srcs/Player.cpp \
-		srcs/sound.cpp
+		srcs/sound.cpp srcs/exit_sprite.cpp srcs/collection_sprite.cpp \
+		srcs/player_sprite.cpp
 OBJS = $(SRCS:.cpp=.o)
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long

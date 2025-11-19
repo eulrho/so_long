@@ -14,6 +14,7 @@ void	Map::isValidMapConfig(int y, int x, int &start_cnt, int &end_cnt)
 	{
 		this->setStartY(y);
 		this->setStartX(x);
+		this->contents[y][x] = '0';
 		start_cnt++;
 	}
 	else if (this->isEqualChar(y, x, 'C'))
