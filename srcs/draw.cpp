@@ -20,4 +20,6 @@ void	Game::drawMap()
 				this->drawMonster(x, y);
 		}
 	}
+	for (int x = 0; x < 3; x++)
+		drawPlayerHp(x, 0);
 }

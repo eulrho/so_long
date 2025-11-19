@@ -34,6 +34,7 @@ using namespace std;
 # define TILE "textures/crack.xpm"
 # define WALL "textures/rock.xpm"
 # define BEFORE_EXIT "textures/portal_bef.xpm"
+# define HP "textures/heart.xpm"
 
 // bgm path
 # define BACKGROUND "/Users/rho-eul/study/so_long/bgm/game_bgm.mp3"
@@ -59,6 +60,7 @@ class Game {
 		Image		collection_img;
 		Image		exit_img;
 		Image		monster_img;
+		Image		hp_img;
 		Map     	map;
 		Player  	player;
 		Monster		monster;
@@ -88,6 +90,7 @@ class Game {
 		void		drawExit(int, int);
 		void		drawWall(int, int);
 		void		drawMonster(int, int);
+		void		drawPlayerHp(int, int);
 		void		saveImage(Image&, char*);
 
 		bool		isValidLoad(int, int);
@@ -122,6 +125,8 @@ class Game {
 		void	move(int, int);
 		bool	isExit();
 		void 	checkCrash();
+
+		void 	drawPlayerHp();
 
 		void	changeExitImage();
 		void 	changeCollectionImage();

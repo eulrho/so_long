@@ -50,3 +50,11 @@ void	Game::drawMonster(int x, int y)
 	mlx_put_image_to_window(this->mlx, this->win, this->monster_img.image,
 							x * IMAGE_SIZE, y * IMAGE_SIZE);
 }
+
+void	Game::drawPlayerHp(int x, int y)
+{
+	if (this->hp_img.image == NULL)
+		this->saveImage(this->hp_img, (char*)HP);
+	mlx_put_image_to_window(this->mlx, this->win, this->hp_img.image,
+							x * IMAGE_SIZE, y * IMAGE_SIZE);
+}

@@ -102,6 +102,8 @@ void Game::checkCrash()
 		this->attack_time = clock();
 		this->playSound(this->attackHandle);
 		this->player.damage();
+		this->drawTile(this->player.getHp(), 0);
+		this->drawWall(this->player.getHp(), 0);
 	}
 	if (this->player.getHp() == 0)
 		this->playerLose();
