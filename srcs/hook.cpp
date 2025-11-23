@@ -3,10 +3,7 @@
 int	render_next_frame(void *param)
 {
 	Game *game = static_cast<Game*>(param);
-	game->changeExitImage();
-	game->changeMonsterImage();
-	game->changeCollectionImage();
-	game->changePlayerImage();
+	game->reDraw();
 	game->checkCrash();
 	return (0);
 }
@@ -14,9 +11,7 @@ int	render_next_frame(void *param)
 int	x_close(int keycode, void *param)
 {
 	(void)keycode;
-
-	Game *game = static_cast<Game*>(param);
-	game->stopSound();
+	(void)param;
 	exit(0);
 	return (0);
 }

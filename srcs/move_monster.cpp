@@ -21,6 +21,9 @@ bool is_valid_direction(int y_diff, int x_diff, int target)
 
 void Game::randomMonsterMove()
 {
+	if (this->monster.getYPos() == -1) return ;
+	if (rand() % 50 != 2)
+		return ;
 	int dy[4] = {-1, 0, 1, 0};
 	int dx[4] = {0, 1, 0, -1};
 
@@ -42,7 +45,7 @@ void Game::randomMonsterMove()
 	}
 	else diff.push_back(tmp[0]);
 
-	this->drawTile(this->monster.getXPos(), this->monster.getYPos());
+	this->paint.removeCharacter(this->monster.getYPos(), this->monster.getXPos());
 	int random_idx = rand() % diff.size();
 	this->monster.walk(diff[random_idx].first, diff[random_idx].second);
 }

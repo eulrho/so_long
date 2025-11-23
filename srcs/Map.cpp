@@ -73,7 +73,7 @@ const int& Map::getMonsterStartY() const { return this->monster_start_y; }
 
 const int& Map::getMonsterStartX() const { return this->monster_start_x; }
 
-bool Map::isEqualChar(int y, int x, char ch) {
+bool Map::isEqualChar(int y, int x, char ch) const {
     return this->contents[y][x] == ch;
 }
 

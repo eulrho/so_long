@@ -7,9 +7,9 @@ enum DIRECTION {
 
 class Object {
 	private:
-		int				y_pos;
-		int				x_pos;
-		int				direction;
+		int	y_pos;
+		int	x_pos;
+		int	direction;
 
 	public:
 		Object();

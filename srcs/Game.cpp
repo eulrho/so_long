@@ -3,26 +3,20 @@
 #include "../includes/hook.hpp"
 
 Game::Game() :
+	paint(Paint()),
     mlx(NULL),
     win(NULL),
 	isEnd(false),
-	exit_seq(0),
-	collection_seq(0),
-	player_seq(0),
-	monster_seq(0),
 	start_time(clock()),
 	attack_time(0) {}
 
 Game::~Game() {}
 
 Game::Game(const string &map_file) :
+	paint(Paint()),
     mlx(NULL),
     win(NULL),
 	isEnd(false),
-	exit_seq(0),
-	collection_seq(0),
-	player_seq(0),
-	monster_seq(0),
 	start_time(clock()),
 	attack_time(0)
 {
@@ -43,8 +37,8 @@ void Game::initializeGame() {
     this->mlx = mlx_init();
 	this->win = mlx_new_window(this->mlx, this->map.getXSize() * IMAGE_SIZE,
 			this->map.getYSize() * IMAGE_SIZE, (char*)GAME_NAME);
-	this->drawMap();
-	this->soundInit();
+	this->paint.init(mlx, win);
+	this->music.init();
 }
 
 void Game::startGame() {
@@ -55,8 +49,8 @@ void Game::startGame() {
 		mlx_hook(this->win, EXIT_BUTTON, 0, x_close, this);
 		mlx_loop_hook(this->mlx, render_next_frame, this);
 
-		this->playSound(this->backgroundHandle);
-		this->drawMap();
+		this->music.playBackgroundSound();
+		this->paint.drawMap(this->map);
 		mlx_loop(this->mlx);
 	}
 	catch(const exception& e) {
@@ -70,11 +64,12 @@ bool Game::isValidLoad(int y, int x) {
 		return false;
 	if (this->map.isEqualChar(y, x, 'C'))
 	{
-		this->playSound(this->mouseHandle);
+		this->music.playCollectionSound();
         this->map.subCollectionCnt(y, x);
 		if (this->map.getCollectionCnt() == 0) {
 			this->isEnd = true;
-			this->playSound(this->exitHandle);
+			this->paint.setIsBefore(false);
+			this->music.playExitSound();
 		}
 	}
 	return true;
@@ -82,8 +77,8 @@ bool Game::isValidLoad(int y, int x) {
 
 void Game::move(int y_diff, int x_diff) {
     if (isValidLoad(this->player.getYPos() + y_diff, this->player.getXPos() + x_diff)) {
-		this->drawTile(this->player.getXPos(), this->player.getYPos());
-		this->playSound(this->walkHandle);
+		this->music.playWalkSound();
+		this->paint.removeCharacter(this->player.getYPos(), this->player.getXPos());
 		this->player.walk(y_diff, x_diff);
     }
 }
@@ -100,11 +95,16 @@ void Game::checkCrash()
 	{
 		if (this->attack_time != 0 && ((double)(clock() - this->attack_time) / CLOCKS_PER_SEC) <= 0.1) return;
 		this->attack_time = clock();
-		this->playSound(this->attackHandle);
+		this->music.playAttackSound();
 		this->player.damage();
-		this->drawTile(this->player.getHp(), 0);
-		this->drawWall(this->player.getHp(), 0);
+		this->paint.removeHpImage(0, this->player.getHp());
 	}
 	if (this->player.getHp() == 0)
 		this->playerLose();
+}
+
+void Game::reDraw()
+{
+	this->randomMonsterMove();
+	this->paint.drawSpriteImage(this->map, this->monster, this->player);
 }

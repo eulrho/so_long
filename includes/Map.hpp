@@ -57,7 +57,7 @@ class Map {
 		const int&              getMonsterStartY() const;
 		const int&              getMonsterStartX() const;
 
-		bool                    isEqualChar(int, int, char);
+		bool                    isEqualChar(int, int, char) const;
         void			        isValidFile(ifstream&, const string&);
         void		        	isValidMapConfig(int, int, int&, int&, int&);
         void		        	isValidConfigCount(const int&, const int&, const int&);
