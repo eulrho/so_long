@@ -1,9 +1,10 @@
 CXX = c++
 SRCS = srcs/main.cpp srcs/hook.cpp srcs/check_map.cpp srcs/check_file.cpp \
 		srcs/check_path.cpp srcs/Game.cpp srcs/Map.cpp srcs/Player.cpp \
-		srcs/Object.cpp srcs/Monster.cpp srcs/move_monster.cpp \
+		srcs/Object.cpp srcs/Monster.cpp srcs/find_monster_path.cpp \
 		srcs/game_end.cpp srcs/map_error.cpp srcs/Music.cpp srcs/Paint.cpp \
-		srcs/set_image.cpp srcs/sprite.cpp srcs/play_sound.cpp
+		srcs/set_image.cpp srcs/sprite.cpp srcs/play_sound.cpp \
+		srcs/move_object.cpp
 OBJS = $(SRCS:.cpp=.o)
 CFLAGS = -Wall -Wextra -Werror
 NAME = so_long

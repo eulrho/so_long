@@ -8,7 +8,9 @@ Game::Game() :
     win(NULL),
 	isEnd(false),
 	start_time(clock()),
-	attack_time(0) {}
+	attack_time(0),
+	monster_move_time(0),
+	player_move_cnt(0) {}
 
 Game::~Game() {}
 
@@ -18,7 +20,9 @@ Game::Game(const string &map_file) :
     win(NULL),
 	isEnd(false),
 	start_time(clock()),
-	attack_time(0)
+	attack_time(0),
+	monster_move_time(0),
+	player_move_cnt(0)
 {
 	try {
 		srand((unsigned int)time(NULL));
@@ -26,6 +30,7 @@ Game::Game(const string &map_file) :
 		this->map.isValidMap();
 		this->player = Player(this->map.getStartY(), this->map.getStartX());
 		this->monster = Monster(this->map.getMonsterStartY(), this->map.getMonsterStartX());
+		this->monster.setPath(this->map, this->player.getYPos(), this->player.getXPos());
 	}
 	catch(const exception& e) {
 		cerr << "\033[1;31m" << "Error\n" << e.what() << "\033[0m";
@@ -62,10 +67,9 @@ void Game::startGame() {
 bool Game::isValidLoad(int y, int x) {
 	if (this->map.isEqualChar(y, x, '1'))
 		return false;
-	if (this->map.isEqualChar(y, x, 'C'))
-	{
+	if (this->map.isEqualChar(y, x, 'C')) {
 		this->music.playCollectionSound();
-        this->map.subCollectionCnt(y, x);
+		this->map.subCollectionCnt(y, x);
 		if (this->map.getCollectionCnt() == 0) {
 			this->isEnd = true;
 			this->paint.setIsBefore(false);
@@ -73,14 +77,6 @@ bool Game::isValidLoad(int y, int x) {
 		}
 	}
 	return true;
-}
-
-void Game::move(int y_diff, int x_diff) {
-    if (isValidLoad(this->player.getYPos() + y_diff, this->player.getXPos() + x_diff)) {
-		this->music.playWalkSound();
-		this->paint.removeCharacter(this->player.getYPos(), this->player.getXPos());
-		this->player.walk(y_diff, x_diff);
-    }
 }
 
 bool Game::isExit() {
@@ -105,6 +101,6 @@ void Game::checkCrash()
 
 void Game::reDraw()
 {
-	this->randomMonsterMove();
+	this->moveMonster();
 	this->paint.drawSpriteImage(this->map, this->monster, this->player);
 }

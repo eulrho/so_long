@@ -21,13 +21,13 @@ int	key_hook(int keycode, void *param)
 	Game *game = static_cast<Game*>(param);
 	
 	if (keycode == KEY_UP)
-		game->move(-1, 0);
+		game->movePlayer(-1, 0);
 	else if (keycode == KEY_DOWN)
-		game->move(1, 0);
+		game->movePlayer(1, 0);
 	else if (keycode == KEY_LEFT)
-		game->move(0, -1);
+		game->movePlayer(0, -1);
 	else if (keycode == KEY_RIGHT)
-		game->move(0, +1);
+		game->movePlayer(0, +1);
 	else if (keycode == ESC)
 		x_close(0, game);
 	if (game->isExit())

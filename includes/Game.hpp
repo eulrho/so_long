@@ -44,12 +44,13 @@ class Game {
 		bool 		isEnd;
 		clock_t		start_time;
 		clock_t 	attack_time;
+		clock_t 	monster_move_time;
+		int 		player_move_cnt;
 
 		Game();
 
 		void		initializeGame();
 		bool		isValidLoad(int, int);
-
 		void 		playerLose();
 		
 	public:
@@ -58,9 +59,9 @@ class Game {
 
 		void	startGame();
 		void 	playerWin();
-		void	move(int, int);
+		void	movePlayer(int, int);
+		void 	moveMonster();
 		bool	isExit();
-		void 	randomMonsterMove();
 		void 	checkCrash();
 		void 	reDraw();
 };

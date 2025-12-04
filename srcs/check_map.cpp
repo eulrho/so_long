@@ -48,7 +48,9 @@ void	Map::isValidRectangle(int y)
 }
 
 void	Map::isValidMap()
-{	
+{
+	if ((long long)this->y_size * this->x_size > 2147483647)
+		throw InvalidMapException(this->getErrorMessage(MAP_SIZE));
 	int player_cnt = 0;
 	int end_cnt = 0;
 	int monster_cnt = 0;

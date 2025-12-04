@@ -10,7 +10,7 @@ const char* Map::getErrorMessage(int error_no) const
 		return "invalid configuration on map";
 	else if (error_no == INVALID_PATH)
 		return "path not found";
-	else return "map is not rectangle";
+	else return "invalid map size";
 }
 
 const char* Map::InvalidMapException::what() const throw() { return message; }
