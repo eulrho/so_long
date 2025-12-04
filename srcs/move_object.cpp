@@ -2,7 +2,7 @@
 
 void Game::movePlayer(int y_diff, int x_diff) {
 	if (isValidLoad(this->player.getYPos() + y_diff, this->player.getXPos() + x_diff)) {
-		if (++this->player_move_cnt == 3) {
+		if (this->player_move_cnt++ == 3) {
 			this->monster.setPath(this->map, this->player.getYPos() + y_diff, this->player.getXPos() + x_diff);
 			this->player_move_cnt = 0;
 		}

@@ -17,7 +17,6 @@ class Monster : public Object{
 		Monster(int, int);
 
 		Monster	&operator=(const Monster &);
-		int		findNewDirection(int, int) override;
 		void	setPath(Map&, int, int);
 		bool 	isEmptyPath();
 		void 	moveByPath();

@@ -1,15 +1,10 @@
 #ifndef OBJECT_HPP
 # define OBJECT_HPP
 
-enum DIRECTION {
-	LEFT, RIGHT, UP, DOWN
-};
-
 class Object {
-	private:
+	protected:
 		int	y_pos;
 		int	x_pos;
-		int	direction;
 
 	public:
 		Object();
@@ -19,12 +14,8 @@ class Object {
 		Object			&operator=(const Object &);
 		const int&		getYPos() const;
 		const int&		getXPos() const;
-		const int&		getDirection() const;
 
-		void			setDirection(int);
-
-		virtual int		findNewDirection(int, int);
-		void        	walk(int, int);
+		virtual void    walk(int, int);
 };
 
 #endif

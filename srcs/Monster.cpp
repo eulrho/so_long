@@ -15,20 +15,12 @@ Monster &Monster::operator=(const Monster &other)
 	return *this;
 }
 
-int Monster::findNewDirection(int y_diff, int x_diff)
-{
-	if (x_diff == 1 && y_diff == 0) return RIGHT;
-	else if (x_diff == -1 && y_diff == 0) return LEFT;
-	else if (x_diff == 0 && y_diff == 1) return DOWN;
-	else return UP;
-}
-
 bool Monster::isEmptyPath() { return this->path.empty(); }
 
 void Monster::moveByPath()
 {
-	int y_diff = this->path.top().first - this->getYPos();
-	int x_diff = this->path.top().second - this->getXPos();
+	int y_diff = this->path.top().first - this->y_pos;
+	int x_diff = this->path.top().second - this->x_pos;
 	this->walk(y_diff, x_diff);
 	this->path.pop();
 }
